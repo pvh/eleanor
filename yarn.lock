@@ -23,12 +23,13 @@
   resolved "https://registry.yarnpkg.com/@types/anymatch/-/anymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
   integrity sha512-/+CRPXpBDpo2RK9C68N3b2cOvO0Cf5B9aPijHsoDQTHivnGSObdOF2BRQOYjojWTDy6nQvMjmqRXIxH55VjxxA==
 
-"@types/chrome@^0.0.89":
-  version "0.0.89"
-  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.89.tgz#0d5baef543aaa0715b345b57b86cba6ca708b524"
-  integrity sha512-nWgL4U38SnIuMpG2rKMCGDknfZb193KFY15imqHUVFF4IJAVXvdEJOOgtcX9v2XsAaZiz2UUOInvWk5x1DhENQ==
+"@types/chrome@^0.0.202":
+  version "0.0.202"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.202.tgz#ecc6747cc797b6b8427cbb5d9723c91dfc8bd3f4"
+  integrity sha512-Oc4daL9sFS+9MToVZPLMBxR7PxsEdod0b8wOY11lRr06GJp43MORvHeDyMD8QzeRGT6HI13oaYAe2PBgvALc4w==
   dependencies:
     "@types/filesystem" "*"
+    "@types/har-format" "*"
 
 "@types/copy-webpack-plugin@^5.0.0":
   version "5.0.0"
@@ -55,6 +56,11 @@
   version "0.0.28"
   resolved "https://registry.yarnpkg.com/@types/filewriter/-/filewriter-0.0.28.tgz#c054e8af4d9dd75db4e63abc76f885168714d4b3"
   integrity sha1-wFTor02d11205jq8dviFFocU1LM=
+
+"@types/har-format@*":
+  version "1.2.9"
+  resolved "https://registry.yarnpkg.com/@types/har-format/-/har-format-1.2.9.tgz#b9b3a9bfc33a078e7d898a00b09662910577f4a4"
+  integrity sha512-rffW6MhQ9yoa75bdNi+rjZBAvu2HhehWJXlhuWXnWdENeuKe82wUgAwxYOb7KRKKmxYN+D/iRKd2NDQMLqlUmg==
 
 "@types/json-schema@^7.0.3":
   version "7.0.3"
