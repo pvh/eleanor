@@ -3,18 +3,19 @@ import sendMessage from './extension-messaging'
 let feedbackTimerGlobal
 let terminateTimerGlobal
 
-chrome.contextMenus.onClicked.addListener((itemData) => {
+chrome.contextMenus.onClicked.addListener(async (itemData, tab) => {
   startActionFeedback()
   if (itemData.selectionText) {
-    chrome.tabs.executeScript(
+    chrome.scripting.executeScript(
       {
-        code: 'window.getSelection().toString();',
+        target: { tabId: tab?.id!, frameIds: [itemData.frameId!] },
+        func: () => {},
       },
-      (selection) => {
+      () => {
         sendMessage({
-          src: window.location.href,
+          src: itemData.pageUrl,
           capturedAt: new Date().toISOString(),
-          dataUrl: `data:text/plain,${selection[0]}`,
+          dataUrl: `data:text/plain,${itemData.selectionText}`,
         })
       }
     )
@@ -56,24 +57,20 @@ chrome.runtime.onInstalled.addListener(() => {
   })
 })
 
-chrome.browserAction.onClicked.addListener((tab) => {
+chrome.action.onClicked.addListener((tab) => {
   startActionFeedback()
-  chrome.tabs.executeScript(
-    {
-      file: 'content.js',
-    },
-    () => {
-      let e = chrome.runtime.lastError
+  chrome.scripting
+    .executeScript({ target: { tabId: tab.id!, allFrames: true }, files: ['content.js'] })
+    .catch((e) => {
       if (e !== undefined) {
-        console.log('error during executeScript')
+        console.log('error during executeScript', e)
         responseFeedback('❌')
       }
-    }
-  )
+    })
 })
 
 function updateBadge(text) {
-  chrome.browserAction.setBadgeText({ text })
+  chrome.action.setBadgeText({ text })
 }
 
 function* actionFeedback() {
@@ -109,7 +106,7 @@ function endFeedback() {
   feedbackTimerGlobal = null
   terminateTimerGlobal = null
   updateBadge('')
-  chrome.browserAction.enable()
+  chrome.action.enable()
 }
 
 function responseFeedback(text) {
@@ -137,7 +134,7 @@ function clipperResponse(response) {
   }
 }
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   // For now, all messages go to the native host. We might want to filter here
   // in the future.
   sendMessage(request, clipperResponse)
